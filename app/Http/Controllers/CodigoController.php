@@ -35,7 +35,7 @@ class CodigoController extends Controller
 
     public function encryptWeb(Request $requst)
     {
-        $request->validate([
+        $requst->validate([
             'codigo'=>'required',
         ]);
         $codigo = new Codigo();
