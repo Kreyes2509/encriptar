@@ -53,7 +53,7 @@
             @csrf
             <div class="input-group mb-3">
                 <span class="input-group-text"><i class="fa-solid fa-graduation-cap"></i></span>
-                <input type="string" name="codigo" class="form-control" placeholder="mensaje" aria-label="Username">
+                <input type="string" name="codigo" class="form-control" placeholder="mensaje" aria-label="Username"><br>
                 @error('codigo')
                 <br> <small class="text-danger">{{$message}}</small>
                 @enderror
@@ -82,7 +82,7 @@
             @csrf
             <div class="input-group mb-3">
                 <span class="input-group-text"><i class="fa-solid fa-graduation-cap"></i></span>
-                <input type="string" name="codigo" class="form-control" placeholder="mensaje" aria-label="Username">
+                <input type="string" name="codigo" class="form-control" placeholder="mensaje" aria-label="Username"><br>
                 @error('codigo')
                 <br> <small class="text-danger">{{$message}}</small>
                 @enderror
