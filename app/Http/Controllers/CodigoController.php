@@ -35,6 +35,9 @@ class CodigoController extends Controller
 
     public function encryptWeb(Request $requst)
     {
+        $request->validate([
+            'codigo'=>'required',
+        ]);
         $codigo = new Codigo();
         $encrypt = Crypt::encryptString($requst->input('codigo'));
         $codigo->encryptar =  $encrypt;
@@ -48,6 +51,9 @@ class CodigoController extends Controller
 
     public function decrypt(Request $request)
     {
+        $request->validate([
+            'codigo'=>'required',
+        ]);
         $codigos = Codigo::where('encryptar','=',$request->input('codigo'))->first();
         if($codigos->encryptar == $request->input('codigo') || Auth::user()->rol_id == 1)
         {
