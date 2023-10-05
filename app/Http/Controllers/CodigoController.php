@@ -38,7 +38,6 @@ class CodigoController extends Controller
         $codigo = new Codigo();
         $encrypt = Crypt::encryptString($requst->input('codigo'));
         $codigo->encryptar =  $encrypt;
-        $codigo->user_id = Auth::user()->id;
         if($codigo->save())
         {
             Mail::to('20170157@uttcampus.edu.mx')->send(new MandarCorreo($encrypt));
