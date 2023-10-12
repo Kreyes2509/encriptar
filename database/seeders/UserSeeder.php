@@ -19,5 +19,11 @@ class UserSeeder extends Seeder
             'password'=>bcrypt('12345678'),
             'rol_id'=>1,
         ]);
+        $user = User::create([
+            'name'=>'kenneth',
+            'email'=> 'kreyes.dev@gmail.com',
+            'password'=>bcrypt('12345678'),
+            'rol_id'=>1,
+        ]);
     }
 }

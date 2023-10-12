@@ -37,10 +37,13 @@ class CodigoController extends Controller
     {
         $requst->validate([
             'codigo'=>'required',
+            'user_id'=>'required'
         ]);
         $codigo = new Codigo();
         $encrypt = Crypt::encryptString($requst->input('codigo'));
         $codigo->encryptar =  $encrypt;
+        $codigo->user_id = Auth::user()->id;
+        $codigo->destinatario = $requst->input('user_id');
         if($codigo->save())
         {
             Mail::to('20170157@uttcampus.edu.mx')->send(new MandarCorreo($encrypt));
@@ -55,10 +58,11 @@ class CodigoController extends Controller
             'codigo'=>'required',
         ]);
         $codigos = Codigo::where('encryptar','=',$request->input('codigo'))->first();
-        if($codigos->encryptar == $request->input('codigo') || Auth::user()->rol_id == 1)
+        if($codigos->encryptar == $request->input('codigo') && $codigos->destinatario == Auth::user()->id)
         {
             $decrypt = Crypt::decryptString($request->input('codigo'));
             $codigos->desencryptar = $decrypt;
+            $codigos->status = true;
             if($codigos->save())
             {
                 $frase = "frase:" . $decrypt;

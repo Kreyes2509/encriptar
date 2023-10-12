@@ -31,11 +31,41 @@
         <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal1">
             Encriptar
         </button>
-        @if (Auth::user()->rol_id == 1)
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Desencriptar
         </button>
-        @endif
+    </div>
+</div>
+<br>
+
+<div class="row mt-3">
+    <div class="col-12 col-lg-8 offset-0 offset-lg-2">
+        <div class="table-responsive">
+            <table class="table table-fixed">
+                <thead>
+                    <tr>
+                        <th scope="col" class="col-1">#</th>
+                        <th scope="col" class="col-3">mensaje</th>
+                        <th scope="col" class="col-4">desencriptado</th>
+                        <th scope="col" class="col-4">destinatario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($codigos as $codigo)
+                        <tr>
+                            <td class="col-1">{{$codigo->id}}</td>
+                            <td class="col-3">{{$codigo->encryptar}}</td>
+                            @if ($codigo->status == 1)
+                                <td class="col-4">{{$codigo->desencryptar}}</td>
+                            @else
+                                <td class="col-4">el mensaje no a sido descifrado</td>
+                            @endif
+                            <td class="col-4">{{$codigo->destinatario}}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -49,17 +79,31 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form method="POST" action="{{url('encryptWeb')}}">
-            @csrf
-            <div class="input-group mb-3">
-                <span class="input-group-text"><i class="fa-solid fa-graduation-cap"></i></span>
-                <input type="string" name="codigo" class="form-control" placeholder="mensaje" aria-label="Username"><br>
-                @error('codigo')
-                <br> <small class="text-danger">{{$message}}</small>
-                @enderror
-            </div>
-            <button type="submit" class="btn btn-primary">Encriptar</button>
-          </form>
+            <form method="POST" action="{{ url('encryptWeb') }}">
+                @csrf
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="fa-solid fa-graduation-cap"></i></span>
+                    <input type="string" name="codigo" class="form-control" placeholder="mensaje" aria-label="Username">
+                    @error('codigo')
+                    <br> <small class="text-danger">{{$message}}</small>
+                    @enderror
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="">Usuario a quien va dirigida la frase</label>
+                    </div>
+                    <div class="col-md-6">
+                        <select class="form-select" name="user_id" aria-label="Default select example">
+                            <option selected>Usuarios</option>
+                            @foreach ($users as $row)
+                                <option value="{{$row->id}}">{{$row->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary">Encriptar</button>
+            </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

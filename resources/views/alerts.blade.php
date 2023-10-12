@@ -88,7 +88,7 @@
     Swal.fire({
     icon: 'error',
     title: 'Oops...',
-    text: 'El usuario no puede desencriptar esta fresa',
+    text: 'El usuario no puede desencriptar esta fresa, porque no es el destinatorio',
     })
 </script>
 @endif

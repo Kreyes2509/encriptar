@@ -15,6 +15,8 @@ class Codigo extends Model
         'id',
         'encryptar',
         'desencryptar',
-        'user_id'
+        'user_id',
+        'destinatario',
+        'status'
     ];
 }

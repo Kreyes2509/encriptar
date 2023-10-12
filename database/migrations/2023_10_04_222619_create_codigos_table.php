@@ -15,6 +15,11 @@ return new class extends Migration
             $table->id();
             $table->longText('encryptar');
             $table->longText('desencryptar')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('destinatario');
+            $table->foreign('destinatario')->references('id')->on('users')->onDelete('cascade');
+            $table->boolean('status')->nullable()->default(false);
             $table->timestamps();
         });
     }
