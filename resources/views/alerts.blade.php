@@ -37,6 +37,20 @@
 </script>
 @endif
 
+
+@if (session('msg') == 'frase')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script type="text/javascript">
+        Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title:'mensaje descifrado',
+        showConfirmButton: false,
+        timer: 1500
+    })
+</script>
+@endif
+
 @if (session('msg') == 'credenciales no validas')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">

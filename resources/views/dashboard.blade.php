@@ -19,7 +19,7 @@
 
 @section('conteiner')
 
-@if ($message = Session::get('mensaje'))
+@if ($message = Session::get('msj'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
     <strong>{{$message}}</strong>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -47,6 +47,7 @@
                     <tr>
                         <th scope="col" class="col-3">mensaje</th>
                         <th scope="col" class="col-4">desencriptado</th>
+                        <th scope="col" class="col-4">destinatario</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,6 +59,7 @@
                             @else
                                 <td class="col-4">el mensaje no a sido descifrado</td>
                             @endif
+                            <td class="col-4">{{$codigo->destinatario}}</td>
                         </tr>
                     @endforeach
                 </tbody>

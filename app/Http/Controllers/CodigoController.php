@@ -50,6 +50,7 @@ class CodigoController extends Controller
         {
             event(new ChatEvent('mensaje'));
             Mail::to('20170157@uttcampus.edu.mx')->send(new MandarCorreo($encrypt));
+            return redirect('/dashboard')->with('msg','OK');
         }
         return redirect('/dashboard')->with('msg','BadRequest1');
     }
@@ -69,6 +70,7 @@ class CodigoController extends Controller
             {
                 event(new ChatEvent('mensaje'));
                 $frase = "frase:" . $decrypt;
+                return redirect('/dashboard')->with('msg','frase');
             }
 
             return redirect('/dashboard')->with('msg','Badrequest');
