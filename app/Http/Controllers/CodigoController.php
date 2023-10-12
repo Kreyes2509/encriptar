@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
+use App\Events\ChatEvent;
+use Illuminate\Support\Facades\Broadcast;
 
 class CodigoController extends Controller
 {
@@ -46,8 +48,8 @@ class CodigoController extends Controller
         $codigo->destinatario = $requst->input('user_id');
         if($codigo->save())
         {
+            event(new ChatEvent('mensaje'));
             Mail::to('20170157@uttcampus.edu.mx')->send(new MandarCorreo($encrypt));
-            return redirect('/dashboard')->with('msg',"OK");
         }
         return redirect('/dashboard')->with('msg','BadRequest1');
     }
@@ -65,13 +67,20 @@ class CodigoController extends Controller
             $codigos->status = true;
             if($codigos->save())
             {
+                event(new ChatEvent('mensaje'));
                 $frase = "frase:" . $decrypt;
-                return redirect('/dashboard')->with('mensaje',$frase);
             }
 
             return redirect('/dashboard')->with('msg','Badrequest');
         }
 
         return redirect('/dashboard')->with('msg','findError');
+    }
+
+    public function mandarEvento()
+    {
+        event(new ChatEvent('mensaje'));
+
+        return response()->json(['message'=>'evento enviado']);
     }
 }

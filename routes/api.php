@@ -20,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/encrypt',[CodigoController::class,'encrypt']);
+Route::get('/evento',[CodigoController::class,'mandarEvento']);

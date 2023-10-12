@@ -40,30 +40,58 @@
 
 <div class="row mt-3">
     <div class="col-12 col-lg-8 offset-0 offset-lg-2">
+        <h2>Mensajes enviados</h2>
         <div class="table-responsive">
             <table class="table table-fixed">
                 <thead>
                     <tr>
-                        <th scope="col" class="col-1">#</th>
                         <th scope="col" class="col-3">mensaje</th>
                         <th scope="col" class="col-4">desencriptado</th>
-                        <th scope="col" class="col-4">destinatario</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($codigos as $codigo)
                         <tr>
-                            <td class="col-1">{{$codigo->id}}</td>
                             <td class="col-3">{{$codigo->encryptar}}</td>
                             @if ($codigo->status == 1)
                                 <td class="col-4">{{$codigo->desencryptar}}</td>
                             @else
                                 <td class="col-4">el mensaje no a sido descifrado</td>
                             @endif
-                            <td class="col-4">{{$codigo->destinatario}}</td>
                         </tr>
                     @endforeach
                 </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-12 col-lg-8 offset-0 offset-lg-2">
+        <h2>Mensajes recibidos</h2>
+        <div class="table-responsive">
+            <table class="table table-fixed">
+                @if (count($mensaje) > 0)
+                    <thead>
+                        <tr>
+                            <th scope="col" class="col-3">mensaje</th>
+                            <th scope="col" class="col-4">desencriptado</th>
+                            <th scope="col" class="col-4">destinatario</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($mensaje  as $codigo1)
+                            <tr>
+                                <td class="col-3">{{$codigo1->encryptar}}</td>
+                                @if ($codigo1->status == 1)
+                                    <td class="col-4">{{$codigo1->desencryptar}}</td>
+                                @else
+                                    <td class="col-4">el mensaje no a sido descifrado</td>
+                                @endif
+                                <td class="col-4">{{$codigo1->destinatario}}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                @else
+                    <p>no tienes mensajes</p>
+                @endif
             </table>
         </div>
     </div>
@@ -144,3 +172,20 @@
 @include('alerts')
 
 @endsection
+
+<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+<script>
+            // Enable pusher logging - don't include this in production
+            Pusher.logToConsole = true;
+
+            var pusher = new Pusher('5160c8cff0011923445c', {
+            cluster: 'us2'
+            });
+
+            var channel = pusher.subscribe('mensaje');
+            channel.bind('msj-event', function(data) {
+            let mensaje = JSON.stringify(data);
+            console.log(mensaje)
+            window.location.href = "{{route('dashboard')}}";
+        });
+  </script>

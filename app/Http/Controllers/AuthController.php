@@ -26,7 +26,13 @@ class AuthController extends Controller
         ->where('codigos.user_id', '=', Auth::user()->id)
         ->get();
 
-        return view('dashboard',compact('users','codigos'));
+        $mensaje = Codigo::select('users1.name AS user', 'users2.name AS destinatario','codigos.id','codigos.encryptar', 'codigos.desencryptar', 'codigos.status')
+        ->join('users AS users1', 'users1.id', '=', 'codigos.user_id')
+        ->join('users AS users2', 'users2.id', '=', 'codigos.destinatario')
+        ->where('codigos.destinatario', '=', Auth::user()->id)
+        ->get();
+
+        return view('dashboard',compact('users','codigos','mensaje'));
     }
 
     public function registrar()
